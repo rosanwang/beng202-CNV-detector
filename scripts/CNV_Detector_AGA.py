@@ -124,8 +124,10 @@ def CNV_detector(s: str, t: str, v: int, k1: int, k2: int, match_reward: int, mi
                         curr_idx = start 
                         temp_potential_kmer = potential_kmer
                         temp_kmer_sets, curr_idx = tandem_forward(gap_string, temp_potential_kmer, temp_kmer_sets, k, start, end)
-                        while curr_idx != end:
+                        if curr_idx != end:
                             for k in range(k1, k2):
+                                kmer_sets, curr_idx = tandem_backward(gap_string, potential_kmer, kmer_sets, k, start, end)
+
                                 temp_kmer_sets, curr_idx = tandem_forward(gap_string, temp_potential_kmer, temp_kmer_sets, k, start, end)
                             #check if length left is less than k1
                             temp_potential_kmer = 
