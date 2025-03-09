@@ -76,7 +76,7 @@ def tandem_backward(gap_string: str, potential_kmer: str, kmer_sets: dict, k: in
     return kmer_num_instances, curr_idx
 
 
-def possible_kmer_sets(gap_alignments, gap_indices, opps, k1, k2):
+def possible_kmer_sets(gap_alignments, gap_indices, opps, k1, k2, s, t):
     '''
     across all gaps in gap alignments, gets all possible kmer repeat sets
     '''
@@ -89,7 +89,11 @@ def possible_kmer_sets(gap_alignments, gap_indices, opps, k1, k2):
         print("gap set", gap_set)
         print("idx", string_idx)
         original_string = gap_alignments[string_idx]
-        gap_string = gap_alignments[opps[string_idx]] # we search opposite string for kmer
+        #gap_string = gap_alignments[opps[string_idx]] # we search opposite string for kmer
+        if string_idx == 0:
+            gap_string = s
+        else:
+            gap_string = t
         print("gap string", gap_string)
         for start, end in gap_set:
             gap_length = end - start
@@ -229,9 +233,7 @@ def CNV_detector(s: str, t: str, v: int, k1: int, k2: int, match_reward: int, mi
     v: v-proper global similarity threshold
     k1, k2: range of possible kmer lengths
     '''
-    
-    kmers, s_prime, t_prime = [], s, t
-    
+
     # Affine Gap Alignment 
     gap_alignments = affine_gap_alignment(match_reward, mismatch_penalty, gap_opening_penalty, gap_extension_penalty, s, t)
     print("gap alignments", gap_alignments)
@@ -247,7 +249,7 @@ def CNV_detector(s: str, t: str, v: int, k1: int, k2: int, match_reward: int, mi
     print("")
     # [[(0, 1), (9, 10)], []]
 
-    possible_mods = possible_kmer_sets(gap_alignments, gap_indices, opps, k1, k2)
+    possible_mods = possible_kmer_sets(gap_alignments, gap_indices, opps, k1, k2, s, t)
     print("possible_mods", possible_mods)
     print("")
                     
