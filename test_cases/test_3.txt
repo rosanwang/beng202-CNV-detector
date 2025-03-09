@@ -1,0 +1,6 @@
+Same length string and similar alignment reached before all possible options exhausted
+CCTAAAACTCTA
+CCTAACTCTCTA
+2
+3
+20
