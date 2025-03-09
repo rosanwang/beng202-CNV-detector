@@ -1,0 +1,6 @@
+the exact same string 
+TCAGCATAGCATCTAGCAT
+TCAGCATAGCATCTAGCAT
+3
+6
+40

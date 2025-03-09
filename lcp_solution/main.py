@@ -105,10 +105,12 @@ def run_lcp(s: str, t: str, k1: int, k2: int, v: int, depth: int = 0, max_depth:
 
 if __name__ == "__main__":
     # which test case do you want to use?
-    i = 2
-    homedir = ""
+    i = 14
+    homedir = "/Users/rosanwang/Documents/school/ucsd/year 1/winter/BENG 202/beng202-CNV-detector"
 
-    with open(f"{homedir}/test_cases/test_{i}.txt", "r") as f:
+    # with open(f"{homedir}/test_cases/test_{i}.txt", "r") as f:
+    #     inputs = f.readlines()
+    with open(f"{homedir}/test_cases/inputs/input_{i}.txt", "r") as f:
         inputs = f.readlines()
 
     print(f"Test case description:\n {inputs[0]}")

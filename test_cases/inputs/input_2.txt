@@ -1,0 +1,6 @@
+generic test case
+AAACACTGTG
+AAACTG
+2
+3
+6

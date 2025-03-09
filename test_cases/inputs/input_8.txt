@@ -1,0 +1,6 @@
+no flanking region
+CCTAAAACTCTA
+CCTAACTCTCTA
+2
+3
+20
