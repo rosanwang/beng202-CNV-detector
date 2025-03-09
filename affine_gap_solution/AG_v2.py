@@ -51,8 +51,8 @@ def tandem_forward(gap_string: str, potential_kmer: str, kmer_sets: dict, k: int
     given a string s, finds all tandems copies of potential_kmer, left_to_right
     '''
     kmer_num_instances = 0
-    print('gap string', gap_string)
-    print('potential kmer', potential_kmer)
+    # print('gap string', gap_string)
+    # print('potential kmer', potential_kmer)
     #print(gap_string[curr_idx:curr_idx+k])
    
     while (potential_kmer == gap_string[curr_idx:curr_idx+k]) & (curr_idx+k <= end): # matches previous substring = hit
@@ -60,7 +60,7 @@ def tandem_forward(gap_string: str, potential_kmer: str, kmer_sets: dict, k: int
         curr_idx +=k
     #kmer_sets[(start, end)].append((potential_kmer, kmer_num_instances)) # rem
 
-    print("kmer_num_instances", kmer_num_instances)
+    # print("kmer_num_instances", kmer_num_instances)
     return kmer_num_instances, curr_idx
 
 def tandem_backward(gap_string: str, potential_kmer: str, kmer_sets: dict, k: int, curr_idx: int, start: int, end: int):
@@ -86,18 +86,18 @@ def possible_kmer_sets(gap_alignments, gap_indices, opps, k1, k2, s, t):
     #pair_kmer_sets = []
     kmer_sets = {}
     for string_idx, gap_set in enumerate(gap_indices): # consider every gap in s_gap
-        print("gap set", gap_set)
-        print("idx", string_idx)
+        # print("gap set", gap_set)
+        # print("idx", string_idx)
         original_string = gap_alignments[string_idx] # original string with gaps
-        print("original string where the gap exists:", original_string)
+        # print("original string where the gap exists:", original_string)
         gap_string_dashes = gap_alignments[opps[string_idx]] # we search opposite string for kmer
         if string_idx == 0:
             gap_string = t
         else:
             gap_string = s
-        print("gap string: where we search for kmer:", gap_string)
+        # print("gap string: where we search for kmer:", gap_string)
         for start, end in gap_set:
-            print("start", start, "end", end)
+            # print("start", start, "end", end)
             gap_length = end - start
             # get number of "-" prior to this in the original string (which has the gap)
             num_dash_org = original_string[:start].count("-")
@@ -107,29 +107,29 @@ def possible_kmer_sets(gap_alignments, gap_indices, opps, k1, k2, s, t):
             # get number of "-" prior to this in the opp (which has the cnv)
             num_dash_opp = gap_string_dashes[:start].count("-")
             dash_start, dash_end = start - num_dash_opp, end - num_dash_opp
-            print("dash", dash_start, dash_end)
+            # print("dash", dash_start, dash_end)
             #gap = gap_string[start:end] 
             gap = gap_string[dash_start:dash_end] 
-            print("gap:", gap)
-            print("")
+            # print("gap:", gap)
+            # print("")
 
             if start >= k1: # if kmer can exist before 
                 kmer_range = [x for x in range(k1, k2+1) if x <= gap_length]
-                print("kmer range", kmer_range)
+                # print("kmer range", kmer_range)
                 #for k in range(k1, k2):
                 for k in kmer_range:
-                    print("k", k)
+                    # print("k", k)
                     potential_kmer1 = gap[:k]
-                    print("potential_kmer1", potential_kmer1)
+                    # print("potential_kmer1", potential_kmer1)
                     # matches previous substring --> keep going until repeats end (while in gap), or we hit end of gap
-                    print("prev", gap_string[dash_start-k:dash_start])
+                    # print("prev", gap_string[dash_start-k:dash_start])
                     if potential_kmer1 == gap_string[dash_start-k:dash_start]:
                         curr_idx = dash_start 
-                        print("curr_idx", curr_idx)
+                        # print("curr_idx", curr_idx)
                         kmer1_num_instances, curr_idx = tandem_forward(gap_string, potential_kmer1, kmer_sets, k, curr_idx, start, end)
                         #kmer1_num_instances+=1 #prev
-                        print("curr_idx", curr_idx)
-                        print("")
+                        # print("curr_idx", curr_idx)
+                        # print("")
 
                         # kmer fills gap / is valid
                         if (curr_idx == dash_end):
@@ -141,24 +141,24 @@ def possible_kmer_sets(gap_alignments, gap_indices, opps, k1, k2, s, t):
                             kmer_range = [x for x in range(k1, k2+1) if x <= (dash_end - curr_idx)]
                             for k in kmer_range:
                                 kmer2_start = curr_idx # where new kmer starts
-                                print("kmer2 start", kmer2_start)
+                                # print("kmer2 start", kmer2_start)
                                 #potential_kmer2 = gap_string[curr_idx:curr_idx+k]
                                 potential_kmer2 = gap_string[dash_end:dash_end+k]
-                                print("k", k)
-                                print("protential_kmer2", potential_kmer2)
+                                # print("k", k)
+                                # print("protential_kmer2", potential_kmer2)
                                 kmer2_num_instances, curr_idx_2 = tandem_backward(gap_string, potential_kmer2, kmer_sets, k, dash_end, start, end)
-                                print("curr_idx", curr_idx)
-                                print(dash_end)
+                                # print("curr_idx", curr_idx)
+                                # print(dash_end)
                                 if curr_idx_2 == curr_idx: # valid, add
-                                    print("valid")
+                                    # print("valid")
                                     kmer_sets[(org_start, org_end)].append([(dash_start, potential_kmer1, kmer1_num_instances, string_idx), (kmer2_start, potential_kmer2, kmer2_num_instances, string_idx)])
-                                    print("kmer_sets", kmer_sets)
+                                    # print("kmer_sets", kmer_sets)
             
-            print("kmer sets", kmer_sets)
+            # print("kmer sets", kmer_sets)
             # check substring after gap
             if dash_end <= len(gap_string) - k1:
                 kmer_range = [x for x in range(k1, k2+1) if x <= gap_length]
-                print("kmer range", kmer_range)
+                # print("kmer range", kmer_range)
                 for k in kmer_range:
                     potential_kmer1 = gap[dash_end-k:]
                     # matches substring after --> keep going until repeats end (while in gap), or we hit end of gap
@@ -179,7 +179,7 @@ def possible_kmer_sets(gap_alignments, gap_indices, opps, k1, k2, s, t):
                                 kmer2_start = dash_start # where new kmer starts
                                 #potential_kmer2 = gap_string[curr_idx-k:curr_idx]
                                 potential_kmer2 = gap_string[dash_start-k:dash_start]
-                                print("protential_kmer2", potential_kmer2)
+                                # print("protential_kmer2", potential_kmer2)
                                 kmer2_num_instances, curr_idx_2 = tandem_forward(gap_string, potential_kmer2, kmer_sets, k, dash_start, start, end)
                                 if curr_idx_2 == curr_idx: # valid, add
                                     kmer_sets[(org_start, org_end)].append([(kmer1_start, potential_kmer1, kmer1_num_instances, string_idx), (kmer2_start, potential_kmer2, kmer2_num_instances, string_idx)])
@@ -236,14 +236,14 @@ def v_threshold_mod_combinations(s: str, t: str, v: int, all_mod_combinations):
             if gap_string == 0: # s is the string where the gap is (insert into s)
                 mod_s = s[:kmer_start] + rep_kmer + s[kmer_start:] #FIX
                 kmers.append((kmer, "ins"))
-                print("mod_s insertion", mod_s)
+                # print("mod_s insertion", mod_s)
             if gap_string == 1: # the gap is in t --> delete from s
                 mod_s = s[:kmer_start] + s[kmer_start+ len(rep_kmer):]
-                print("mod_s deletion", mod_s)
+                # print("mod_s deletion", mod_s)
                 kmers.append((kmer, "del"))
         
         # calculate global alignment for this combination
-        print("mod_s", mod_s)
+        # print("mod_s", mod_s)
         global_alignment_score, aligned_s, aligned_t = global_alignment(match_reward, mismatch_penalty, 1, mod_s, t)
         if global_alignment_score <= v:
             if num_mods < min_num_mods:
@@ -262,7 +262,7 @@ def CNV_detector(s: str, t: str, v: int, k1: int, k2: int, match_reward: int, mi
     # Affine Gap Alignment 
     gap_alignments = affine_gap_alignment(match_reward, mismatch_penalty, gap_opening_penalty, gap_extension_penalty, s, t)
     print("gap alignments", gap_alignments)
-    print("")
+    # print("")
     # ('-ACCATCTT-', 'TACCATCATC')
 
     # get the number of "-" in each alignment
@@ -270,16 +270,16 @@ def CNV_detector(s: str, t: str, v: int, k1: int, k2: int, match_reward: int, mi
     # Get positions in s_gap and t_gap where gaps occur --> these are where CNVs may exist
     gap_indices = get_gaps(gap_alignments)
     opps = [1,0]
-    print("gap_indices", gap_indices)
-    print("")
+    # print("gap_indices", gap_indices)
+    # print("")
     # [[(0, 1), (9, 10)], []]
 
     possible_mods = possible_kmer_sets(gap_alignments, gap_indices, opps, k1, k2, s, t)
-    print("possible_mods", possible_mods)
-    print("")
+    # print("possible_mods", possible_mods)
+    # print("")
                     
     all_mod_combinations = all_kmer_combinations(possible_mods)
-    print("all_mod_combinations", all_mod_combinations)
+    # print("all_mod_combinations", all_mod_combinations)
 
     # check which combinations meet threshold global alignment score >= v
     # get alterated s that requires minimum number of modifications
@@ -290,25 +290,26 @@ def CNV_detector(s: str, t: str, v: int, k1: int, k2: int, match_reward: int, mi
 
 if __name__ == "__main__":
     # which test case do you want to use?
+    homedir = "/Users/rosanwang/Documents/school/ucsd/year 1/winter/BENG 202/beng202-CNV-detector"
     # homedir = "/Users/karenpu/Desktop/beng202-CNV-detector/"
-    homedir = "/Users/karenpu/Desktop/beng202-CNV-detector/"
 
     for i in range(1, 15):
-        with open(f"{homedir}/test_cases/inputs/input_{i}.txt", "r") as f:
-            inputs = f.readlines()
-        print(inputs)
+        if i != 3:
+            with open(f"{homedir}/test_cases/inputs/input_{i}.txt", "r") as f:
+                inputs = f.readlines()
+            print(inputs)
 
-        print(f"Test case description:\n {inputs[0]}")
+            print(f"Test case description:\n {inputs[0]}")
 
-        s = inputs[1].replace("\n","")
-        t = inputs[2].replace("\n","")
-        k1 = int(inputs[3].replace("\n",""))
-        k2 = int(inputs[4].replace("\n",""))
-        v  = int(inputs[5].replace("\n",""))
+            s = inputs[1].replace("\n","")
+            t = inputs[2].replace("\n","")
+            k1 = int(inputs[3].replace("\n",""))
+            k2 = int(inputs[4].replace("\n",""))
+            v  = int(inputs[5].replace("\n",""))
 
 
-        match_reward, mismatch_penalty, gap_opening_penalty, gap_extension_penalty = 0, 10, 5, 1
+            match_reward, mismatch_penalty, gap_opening_penalty, gap_extension_penalty = 0, 10, 5, 1
 
-        x = CNV_detector(s, t, v, k1, k2, match_reward, mismatch_penalty, gap_opening_penalty, gap_extension_penalty)
-        print(x)
+            x = CNV_detector(s, t, v, k1, k2, match_reward, mismatch_penalty, gap_opening_penalty, gap_extension_penalty)
+            print(x)
 
