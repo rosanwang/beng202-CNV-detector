@@ -197,30 +197,31 @@ def v_threshold_mod_combinations(s: str, t: str, v: int, all_mod_combinations):
     best_kmers = []
 
     for combination in all_mod_combinations:
-        mod_s = s
+        mod_s = (s, t)
         num_mods = 0
         kmers = []
         for modification in combination:
             kmer_start, kmer, num_repeats, gap_string = modification[0], modification[1], modification[2], modification[3]
             rep_kmer = kmer*num_repeats
             num_mods += num_repeats
-            kmers.append(kmer)
             if gap_string == 0: # s is the string where the gap is (insert into s)
                 mod_s = s[:kmer_start] + rep_kmer + s[kmer_start:] #FIX
+                kmers.append((kmer, "ins"))
                 print("mod_s insertion", mod_s)
             if gap_string == 1: # the gap is in t --> delete from s
                 mod_s = s[:kmer_start] + s[kmer_start+ len(rep_kmer):]
                 print("mod_s deletion", mod_s)
+                kmers.append((kmer, "del"))
         
         # calculate global alignment for this combination
         print("mod_s", mod_s)
-        global_alignment_score = global_alignment(match_reward, mismatch_penalty, 1, mod_s, t)
+        global_alignment_score, aligned_s, aligned_t = global_alignment(match_reward, mismatch_penalty, 1, mod_s, t)
         if global_alignment_score <= v:
             if num_mods < min_num_mods:
-                best_mod_s = mod_s
+                best_mods = (aligned_s, aligned_t)
                 best_kmers = kmers
 
-    return best_mod_s, best_kmers
+    return best_mods, best_kmers
 
 def CNV_detector(s: str, t: str, v: int, k1: int, k2: int, match_reward: int, mismatch_penality: int, gap_opening_penalty: int, gap_closing_penalty: int):
     '''

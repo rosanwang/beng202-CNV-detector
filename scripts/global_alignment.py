@@ -50,7 +50,7 @@ def global_alignment(match_reward, mismatch_penalty, indel_penalty, s, t):
     backtrack, scores = BackTrack(s, t, match_reward, mismatch_penalty, indel_penalty)
     s_a, t_a = Output(backtrack, s, t, len(s), len(t))
     alignment_score = scores[len(s), len(t)]
-    #return (alignment_score, s_a, t_a)
-    return alignment_score
+    return (alignment_score, s_a, t_a)
+    #return alignment_score
 
 
