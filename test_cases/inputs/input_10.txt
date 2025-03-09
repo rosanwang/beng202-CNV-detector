@@ -1,0 +1,6 @@
+check can't edit string T
+AGACACACA
+CTTCTTAGACA
+2
+3
+3

@@ -1,0 +1,6 @@
+same tandem deletion in two different positions 
+CGATCTTAACGCG
+CGCGCGCGATCTTAACGCGG
+2
+2
+25

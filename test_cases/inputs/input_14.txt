@@ -1,0 +1,6 @@
+Test recursive approach
+AGCAGCAAAATATAGC
+AGCCAAAAGCTATAGCGC
+2
+3
+100

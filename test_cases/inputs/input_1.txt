@@ -1,0 +1,6 @@
+Basic test case to ensure proper alignment and detection of deletion
+TACCATCATC
+ACCATCTT
+2
+3
+10
