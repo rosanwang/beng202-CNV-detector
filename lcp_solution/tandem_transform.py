@@ -202,7 +202,6 @@ def tandem_transform_lcs(s: str, t: str, k1: int, k2: int, v: int):
                         reconstructed = s[:indices[-1] + 1] + s_trans
 
                         # apply transformation and check alignment score
-                        # score = similarity(reconstructed, t)
                         score = global_alignment(reconstructed, t)
 
                         if score[0] > v:
