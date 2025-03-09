@@ -288,18 +288,27 @@ def CNV_detector(s: str, t: str, v: int, k1: int, k2: int, match_reward: int, mi
 
     return  best_kmers, best_mod_s
 
-# Examples
-match_reward, mismatch_penalty, gap_opening_penalty, gap_extension_penalty = 0, 20, 5, 1
-s = "ACCATCTT"
-t = "TACCATCATC"
-k1, k2 = 2, 3
-v = 6
+if __name__ == "__main__":
+    # which test case do you want to use?
+    # homedir = "/Users/karenpu/Desktop/beng202-CNV-detector/"
+    homedir = "/Users/karenpu/Desktop/beng202-CNV-detector/"
 
-t = "GGACACTT"
-s = "AAGGACT"
-k1, k2 = 2, 3
-v = 3
+    for i in range(1, 15):
+        with open(f"{homedir}/test_cases/inputs/input_{i}.txt", "r") as f:
+            inputs = f.readlines()
+        print(inputs)
 
-x = CNV_detector(s, t, v, k1, k2, match_reward, mismatch_penalty, gap_opening_penalty, gap_extension_penalty)
-print(x)
+        print(f"Test case description:\n {inputs[0]}")
+
+        s = inputs[1].replace("\n","")
+        t = inputs[2].replace("\n","")
+        k1 = int(inputs[3].replace("\n",""))
+        k2 = int(inputs[4].replace("\n",""))
+        v  = int(inputs[5].replace("\n",""))
+
+
+        match_reward, mismatch_penalty, gap_opening_penalty, gap_extension_penalty = 0, 10, 5, 1
+
+        x = CNV_detector(s, t, v, k1, k2, match_reward, mismatch_penalty, gap_opening_penalty, gap_extension_penalty)
+        print(x)
 

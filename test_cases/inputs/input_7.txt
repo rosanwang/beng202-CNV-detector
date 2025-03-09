@@ -1,0 +1,6 @@
+adjacent k-mer insertion and deletion
+CTATTACCTTACCCCCTTATTA
+TATTACCTTACCCCCCCTTA
+2
+3
+35

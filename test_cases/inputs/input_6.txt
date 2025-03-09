@@ -1,0 +1,6 @@
+adjacemt k-mer deletions
+AGGAGGCCTCCTCCTAGCTA
+GAGGCCTAGCTA
+3
+5
+50

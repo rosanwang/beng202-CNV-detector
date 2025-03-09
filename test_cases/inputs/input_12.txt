@@ -1,0 +1,6 @@
+Repeated tandem duplications
+AGACACACACACACACAC
+CTTCTTAGACA
+2
+3
+3
