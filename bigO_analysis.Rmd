@@ -1,0 +1,21 @@
+```{r}
+# Define range of n
+n <- 2:31  # Using a moderate range to avoid overflow
+
+# Compute functions
+y1 <- n^3 * log(n)
+y2 <- 2^(n^2)
+
+# Plot the first function on a log scale
+plot(n, y1, type="l", col="blue", lwd=2, log="y",
+     xlab="Length of Longest String Input", ylab="log(Big O Time Complexity)", main=" Worst Case Brute Force Vs. LCS Time Complexity",
+     ylim=c(min(y1[y1 > 0]), max(y2, na.rm=TRUE)))  # Ensure valid y-range
+
+# Add the second function
+lines(n, y2, col="red", lwd=2)
+
+# Add a legend
+legend("topleft", legend=c("Our LCS Method", "Brute Force Method"),
+       col=c("blue", "red"), lwd=2)
+```
+
