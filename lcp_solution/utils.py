@@ -77,17 +77,16 @@ def get_search_space_left(s_sub, t_sub, k1, k2, common_alignment):
     temp = []
     for i in range(k1, k2+1):
         temp.append(common_alignment[:i])
-
+        
     search_space = []
     for kmer in temp:
         # tandem deletion
         kmer = kmer.replace(" ", "")
-
-        if s_sub[len(common_alignment) - len(kmer) - 1:] == kmer and t_sub[len(common_alignment) - len(kmer) - 1:] != kmer:
+        if s_sub[len(s_sub) - len(kmer):] == kmer and t_sub[len(t_sub) - len(kmer):] != kmer:
             search_space.append((kmer, 'del'))
 
         # tandem duplication
-        if s_sub[len(common_alignment) - len(kmer) - 1:] != kmer and t_sub[len(common_alignment) - len(kmer) - 1:] == kmer:
+        if s_sub[len(s_sub) - len(kmer):] != kmer and t_sub[len(t_sub) - len(kmer):] == kmer:
             search_space.append((kmer, 'dup'))
 
     return search_space

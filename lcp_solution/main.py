@@ -99,14 +99,13 @@ def run_lcp(s: str, t: str, k1: int, k2: int, v: int, depth: int = 0, max_depth:
             final_t = rt
             final_kmers = right_side[3]
 
-    
     return final_score, final_s, final_t, final_kmers
 
 
 if __name__ == "__main__":
     # which test case do you want to use?
-    i = 14
-    homedir = "/Users/rosanwang/Documents/school/ucsd/year 1/winter/BENG 202/beng202-CNV-detector"
+    i = 11
+    homedir = "/Users/karenpu/Desktop/beng202-CNV-detector/"
 
     # with open(f"{homedir}/test_cases/test_{i}.txt", "r") as f:
     #     inputs = f.readlines()
